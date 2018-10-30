@@ -1,0 +1,29 @@
+{
+  "name": "cgray-adder",
+  "version": "1.0.0",
+  "description": "an adder",
+  "main": "dist/index.js",
+  "scripts": {
+    "init": "mkdir dist",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean && npm run init",
+    "build": "babel ./src -d ./dist",
+    "pretest": "npm run build",
+    "test": "mocha --require @babel/register ./test/*.js",
+    "test:single": "mocha --require @babel/register"
+  },
+  "author": "Caleb Gray",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^5.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.1.0"
+  }
+}
