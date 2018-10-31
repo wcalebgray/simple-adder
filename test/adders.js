@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { HalfAdder } from '../src/components/halfAdder';
 import { FullAdder } from '../src/components/fullAdder';
-import { FourBitRippleCarryAdder } from '../src/components/fourBitRippleCarryAdder';
+import { RippleCarryAdder } from '../src/components/rippleCarryAdder';
 
 const halfAdderLogicHash = [
   {a: 0, b: 0, c: 0, s: 0},
@@ -31,7 +31,7 @@ function generateFourBitLogicHash() {
   return array;
 }
 
-const fourBitAdderLogicHash = generateFourBitLogicHash();
+const rippleCarryAdderLogicHash = generateFourBitLogicHash();
 
 
 
@@ -57,11 +57,11 @@ describe('fullAdder', () => {
   })
 });
 
-describe('fourBitRippleCarryAdder', () => {
+describe('rippleCarryAdder', () => {
   it('should calculate logic table correctly', (done) => {
-    for (let combination of fourBitAdderLogicHash) {
-      const fourBitAdder = new FourBitRippleCarryAdder(combination.a, combination.b);
-      expect(fourBitAdder.getSum()).to.equal(combination.sum);
+    for (let combination of rippleCarryAdderLogicHash) {
+      const rippleCarryAdder = new RippleCarryAdder(combination.a, combination.b);
+      expect(rippleCarryAdder.getSum()).to.equal(combination.sum);
     }
     done();
   })

@@ -1,7 +1,8 @@
 import { FullAdder } from './fullAdder';
 
-export class FourBitRippleCarryAdder {
+export class RippleCarryAdder {
   constructor(int1, int2) {
+    this.BIT_LENGTH = 4;
     this.int1Binary = this.intToBinArray(int1);
     this.int2Binary = this.intToBinArray(int2);
     this.sumBinary = this.calculate();
@@ -17,7 +18,7 @@ export class FourBitRippleCarryAdder {
     let fullAdders = [];
     let sumBinary = [];
     let ci = 0;
-    for(let i=0; i<4; i++){
+    for (let i = 0; i < this.BIT_LENGTH; i++) {
       if(i !== 0){
         ci = this.boolToInt(fullAdders[i-1].getCarry());
       } 
@@ -25,21 +26,21 @@ export class FourBitRippleCarryAdder {
       fullAdders[i] = new FullAdder(this.int1Binary[i], this.int2Binary[i], ci)
       sumBinary[i] = this.boolToInt(fullAdders[i].getSum())
 
-      if(i===3){
+      if (i === this.BIT_LENGTH - 1) {
         sumBinary[i + 1] = this.boolToInt(fullAdders[i].getCarry());
       }
     }
     return sumBinary.reverse();
   }
 
-  intToFourBitString(int) {
+  intToBitString(int) {
     const bitString = int.toString(2);
-    const zerosToPad = 4 - bitString.length;
+    const zerosToPad = this.BIT_LENGTH - bitString.length;
     return '0'.repeat(zerosToPad) + bitString;
   }
 
   intToBinArray(int) {
-    const binString = this.intToFourBitString(int);
+    const binString = this.intToBitString(int);
     let bin = [];
     binString.split('').forEach((bit, index) => {
       bin[index] = parseInt(bit);

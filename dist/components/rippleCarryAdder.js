@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FourBitRippleCarryAdder = void 0;
+exports.RippleCarryAdder = void 0;
 
 var _fullAdder = require("./fullAdder");
 
@@ -13,18 +13,19 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var FourBitRippleCarryAdder =
+var RippleCarryAdder =
 /*#__PURE__*/
 function () {
-  function FourBitRippleCarryAdder(int1, int2) {
-    _classCallCheck(this, FourBitRippleCarryAdder);
+  function RippleCarryAdder(int1, int2) {
+    _classCallCheck(this, RippleCarryAdder);
 
+    this.BIT_LENGTH = 4;
     this.int1Binary = this.intToBinArray(int1);
     this.int2Binary = this.intToBinArray(int2);
     this.sumBinary = this.calculate();
   }
 
-  _createClass(FourBitRippleCarryAdder, [{
+  _createClass(RippleCarryAdder, [{
     key: "boolToInt",
     value: function boolToInt(bool) {
       return bool ? 1 : 0;
@@ -38,7 +39,7 @@ function () {
       var sumBinary = [];
       var ci = 0;
 
-      for (var i = 0; i < 4; i++) {
+      for (var i = 0; i < this.BIT_LENGTH; i++) {
         if (i !== 0) {
           ci = this.boolToInt(fullAdders[i - 1].getCarry());
         }
@@ -46,7 +47,7 @@ function () {
         fullAdders[i] = new _fullAdder.FullAdder(this.int1Binary[i], this.int2Binary[i], ci);
         sumBinary[i] = this.boolToInt(fullAdders[i].getSum());
 
-        if (i === 3) {
+        if (i === this.BIT_LENGTH - 1) {
           sumBinary[i + 1] = this.boolToInt(fullAdders[i].getCarry());
         }
       }
@@ -54,16 +55,16 @@ function () {
       return sumBinary.reverse();
     }
   }, {
-    key: "intToFourBitString",
-    value: function intToFourBitString(int) {
+    key: "intToBitString",
+    value: function intToBitString(int) {
       var bitString = int.toString(2);
-      var zerosToPad = 4 - bitString.length;
+      var zerosToPad = this.BIT_LENGTH - bitString.length;
       return '0'.repeat(zerosToPad) + bitString;
     }
   }, {
     key: "intToBinArray",
     value: function intToBinArray(int) {
-      var binString = this.intToFourBitString(int);
+      var binString = this.intToBitString(int);
       var bin = [];
       binString.split('').forEach(function (bit, index) {
         bin[index] = parseInt(bit);
@@ -87,7 +88,7 @@ function () {
     }
   }]);
 
-  return FourBitRippleCarryAdder;
+  return RippleCarryAdder;
 }();
 
-exports.FourBitRippleCarryAdder = FourBitRippleCarryAdder;
+exports.RippleCarryAdder = RippleCarryAdder;
